@@ -1,6 +1,6 @@
-import type SignupUser from '../interface/SignupUser'
+import type User from '../interface/User'
 import type { Response } from 'express';
-import   userService from '../service/userService';
+import userService from '../service/userService';
 
 
 
@@ -13,16 +13,12 @@ const signupUser = async (req:any, res: Response):Promise<void> => {
             res.status(400).json({ error: '無効なリクエストデータです。' });
             return 
         }
-        const newUser: SignupUser = await userService.signupUser(userData);
+        const newUser: User = await userService.signupUser(userData);
         res.status(200).json(newUser);
     } catch (error) {
         res.status(500).json({ error: '会員登録に失敗しました。' });
     }
 };
-
-
-
-
 
 export default {
     signupUser,
