@@ -9,44 +9,47 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
 model User {
-  id         Int       @id @default(autoincrement())
-  email      String    @unique
+  id         Int        @id @default(autoincrement())
+  email      String     @unique
   name       String
   password   String
-  created_at DateTime  @default(now()) @map("created_at")
-  updated_at DateTime  @updatedAt @map("updated_at")
+  created_at DateTime   @default(now()) @map("created_at")
+  updated_at DateTime   @updatedAt @map("updated_at")
   Categories Category[]
 }
 
-model Category{
-  id    Int     @id @default(autoincrement())
-  user User @relation(fields:[user_id],references: [id])
-  user_id Int
-  name String
-  created_at DateTime  @default(now()) @map("created_at")
-  updated_at DateTime  @updatedAt @map("updated_at")
-  Tasks Task[]
-  @@unique([user_id,name])
+model Category {
+  id         Int      @id @default(autoincrement())
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    Int
+  name       String
+  created_at DateTime @default(now()) @map("created_at")
+  updated_at DateTime @updatedAt @map("updated_at")
+  Tasks      Task[]
+
+  @@unique([user_id, name])
 }
 
 model Task {
-  id    Int     @id @default(autoincrement())
-  category Category @relation(fields:[category_id],references:[id])
+  id          Int          @id @default(autoincrement())
+  category    Category     @relation(fields: [category_id], references: [id])
   category_id Int
-  name String
-  created_at DateTime  @default(now()) @map("created_at")
-  updated_at DateTime  @updatedAt @map("updated_at") 
-  TimeRecord TimeRecord[]
-  @@unique([category_id,name])
+  name        String
+  created_at  DateTime     @default(now()) @map("created_at")
+  updated_at  DateTime     @updatedAt @map("updated_at")
+  TimeRecord  TimeRecord[]
+
+  @@unique([category_id, name])
 }
 
-model TimeRecord{
-     id    Int     @id @default(autoincrement())
-     task Task @relation(fields:[task_id],references:[id])
-     task_id Int
-     start_time DateTime
-     end_time DateTime
-     created_at DateTime  @default(now()) @map("created_at")
-     updated_at DateTime  @updatedAt @map("updated_at") 
-  }
+model TimeRecord {
+  id         Int      @id @default(autoincrement())
+  task       Task     @relation(fields: [task_id], references: [id])
+  task_id    Int
+  start_time DateTime
+  end_time   DateTime
+  created_at DateTime @default(now()) @map("created_at")
+  updated_at DateTime @updatedAt @map("updated_at")
+}
