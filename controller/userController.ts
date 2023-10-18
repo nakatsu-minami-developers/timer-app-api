@@ -9,8 +9,6 @@ import   userService from '../service/userService';
 const signupUser = async (req:any, res: Response):Promise<void> => {
     try {
         const userData=req.body;
-        console.log("userData")
-        console.log(userData)
         if (userData==null) {
             res.status(400).json({ error: '無効なリクエストデータです。' });
             return 
