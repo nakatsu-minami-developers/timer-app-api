@@ -1,17 +1,17 @@
-import SignupUser from '../interface/SignupUser'
-import { Response } from 'express';
-import userService from '../service/userService';
+import type SignupUser from '../interface/SignupUser'
+import type { Response } from 'express';
+import   userService from '../service/userService';
 
 
 
 
-//新規会員登録
-const signupUser = async (req:any, res: Response) => {
+// 新規会員登録
+const signupUser = async (req:any, res: Response):Promise<void> => {
     try {
         const userData=req.body;
         console.log("userData")
         console.log(userData)
-        if (!userData) {
+        if (userData==null) {
             res.status(400).json({ error: '無効なリクエストデータです。' });
             return 
         }
